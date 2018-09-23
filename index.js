@@ -94,10 +94,8 @@ app.post("/registration", (req, res) => {
       error: "Please, fill in all the fields"
     });
   } else {
-    console.log("inside POST /registration", req.body);
     bc.hashPassword(req.body.password)
       .then(hashedPassword => {
-        console.log("hashedPassword: ", hashedPassword);
         db.insertUser(
           req.body.firstName,
           req.body.lastName,
@@ -106,9 +104,6 @@ app.post("/registration", (req, res) => {
         )
           .then(newUser => {
             req.session.userId = newUser.id;
-            // console.log(req.session.userId);
-            // console.log(newUser);
-            // res.redirect('/profile');
             return res.json(newUser);
           })
           .catch(error => {
@@ -141,7 +136,6 @@ app.post("/login", (req, res) => {
       } else {
         bc.checkPassword(req.body.password, user.hashed_password)
           .then(doThePasswordsMatch => {
-            console.log("doThePasswordsMatch: ", doThePasswordsMatch);
             if (doThePasswordsMatch) {
               req.session.userId = user.id;
               res.json(user);
@@ -164,10 +158,10 @@ app.post("/login", (req, res) => {
 const handleFile = uploader.single("file");
 
 app.post("/upload", handleFile, s3.upload, (req, res) => {
-  console.log("It's geting to the post route in upload on your server");
+  // console.log("It's geting to the post route in upload on your server");
   db.addImage(req.session.userId, config.s3Url + req.file.filename)
     .then(userWithUpdatedImage => {
-      console.log("server /upload post route: ", userWithUpdatedImage);
+      // console.log("server /upload post route: ", userWithUpdatedImage);
       res.json({
         success: true,
         image: userWithUpdatedImage.profile_pic
@@ -179,7 +173,6 @@ app.post("/upload", handleFile, s3.upload, (req, res) => {
 app.post("/uploadBio", (req, res) => {
   db.addBio(req.session.userId, req.body.bio)
     .then(userUpdatedBio => {
-      // console.log(image);
       res.json({
         success: true,
         info: userUpdatedBio
@@ -204,14 +197,11 @@ app.get("/user", requireUser, function(req, res) {
     });
 });
 app.get("/user/:id.json", function(req, res) {
-  console.log("req.params.id in user:id server:", req.params.id);
   if (req.session.userId == req.params.id) {
-    console.log("redirecting back to app ");
     res.json({
       redirect: "/"
     });
   } else {
-    console.log("is it getting to the user/:id get route db function?");
     db.getYourUserInfo(req.params.id).then(data => {
       console.log(data);
       res.json({
@@ -227,14 +217,14 @@ app.get("/user/:id.json", function(req, res) {
 app.get("/friendship/:id.json", function(req, res) {
   db.checkFriendship(req.params.id, req.session.userId).then(friendInfo => {
     friendInfo.loggedInUserId = req.session.userId;
-    console.log("friendInfo in friendship route", friendInfo);
+    // console.log("friendInfo in friendship route", friendInfo);
 
     res.json(friendInfo);
   });
 });
 app.post("/endfriendship/:id.json", function(req, res) {
   db.endfriendship(req.params.id, req.session.userId).then(friendInfo => {
-    console.log("friendInfo in friendship route", friendInfo);
+    // console.log("friendInfo in friendship route", friendInfo);
 
     res.json(friendInfo);
   });
@@ -242,7 +232,7 @@ app.post("/endfriendship/:id.json", function(req, res) {
 app.post("/acceptfriendship/:id.json", function(req, res) {
   console.log("is this getting to the accept server route");
   db.acceptfriendship(req.params.id, req.session.userId).then(friendInfo => {
-    console.log("friendInfo in friendship route", friendInfo);
+    // console.log("friendInfo in friendship route", friendInfo);
 
     res.json(friendInfo);
   });
@@ -251,7 +241,7 @@ app.post("/friendshippending/:id.json", function(req, res) {
   db.friendshippending(req.params.id, req.session.userId)
     .then(friendInfo => {
       // friendInfo.loggedInUserId = req.session.userId;
-      console.log("friendInfo in friendship route", friendInfo);
+      // console.log("friendInfo in friendship route", friendInfo);
 
       res.json(friendInfo);
     })
@@ -331,6 +321,7 @@ let onlineUsers = {};
 let chatMessages = [];
 
 io.on("connection", function(socket) {
+  console.log("is this working at all?");
   onlineUsers[socket.id] = socket.request.session.userId;
   db.getAllUsers(Object.values(onlineUsers)).then(users => {
     console.log("online users are : ", users);
@@ -370,6 +361,7 @@ io.on("connection", function(socket) {
   });
 
   socket.on("newMessage", function(newMessage) {
+    console.log("is the new message socket working?");
     db.getYourUserInfo(socket.request.session.userId)
       .then(data => {
         let completNewMessage = {

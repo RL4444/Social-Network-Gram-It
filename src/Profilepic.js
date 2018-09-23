@@ -6,7 +6,7 @@ function ProfilePic(props) {
     return (
         <div id="cornerpic-container">
             <img
-                id="iconpic"
+                className="iconpic"
                 src={props.imageUrl}
                 alt={`${props.firstName} ${props.lastName}`}
             />
