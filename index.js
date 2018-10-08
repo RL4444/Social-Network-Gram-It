@@ -158,10 +158,8 @@ app.post("/login", (req, res) => {
 const handleFile = uploader.single("file");
 
 app.post("/upload", handleFile, s3.upload, (req, res) => {
-  // console.log("It's geting to the post route in upload on your server");
   db.addImage(req.session.userId, config.s3Url + req.file.filename)
     .then(userWithUpdatedImage => {
-      // console.log("server /upload post route: ", userWithUpdatedImage);
       res.json({
         success: true,
         image: userWithUpdatedImage.profile_pic
@@ -218,22 +216,19 @@ app.get("/friendship/:id.json", function(req, res) {
   db.checkFriendship(req.params.id, req.session.userId).then(friendInfo => {
     friendInfo.loggedInUserId = req.session.userId;
     // console.log("friendInfo in friendship route", friendInfo);
-
     res.json(friendInfo);
   });
 });
 app.post("/endfriendship/:id.json", function(req, res) {
   db.endfriendship(req.params.id, req.session.userId).then(friendInfo => {
     // console.log("friendInfo in friendship route", friendInfo);
-
     res.json(friendInfo);
   });
 });
 app.post("/acceptfriendship/:id.json", function(req, res) {
-  console.log("is this getting to the accept server route");
+  // console.log("is this getting to the accept server route");
   db.acceptfriendship(req.params.id, req.session.userId).then(friendInfo => {
     // console.log("friendInfo in friendship route", friendInfo);
-
     res.json(friendInfo);
   });
 });
@@ -242,7 +237,6 @@ app.post("/friendshippending/:id.json", function(req, res) {
     .then(friendInfo => {
       // friendInfo.loggedInUserId = req.session.userId;
       // console.log("friendInfo in friendship route", friendInfo);
-
       res.json(friendInfo);
     })
     .catch(error => console.log(error));
@@ -296,13 +290,6 @@ app.get("/allmedia", function(req, res) {
 
 // // ********************CHAT MESSAGE REDUX LISTENERS***********************************
 //
-// socket.emit("chatMsg", singleChatMessage);
-//
-// socket.on("chatMsg", data => {
-//     // do stuff
-// });
-
-// **************************************************************************************
 
 app.get("*", requireUser, function(req, res) {
   res.sendFile(__dirname + "/index.html");
@@ -315,13 +302,17 @@ function requireUser(req, res, next) {
     next();
   }
 }
-app.listen(process.env.PORT || 8080);
+
+server.listen(8080, function() {
+  console.log("go ahead caller, I'm listening.");
+});
+// app.listen(process.env.PORT || 8080);
 
 let onlineUsers = {};
 let chatMessages = [];
 
 io.on("connection", function(socket) {
-  console.log("is this working at all?");
+  console.log("is socket listening?");
   onlineUsers[socket.id] = socket.request.session.userId;
   db.getAllUsers(Object.values(onlineUsers)).then(users => {
     console.log("online users are : ", users);
@@ -361,7 +352,6 @@ io.on("connection", function(socket) {
   });
 
   socket.on("newMessage", function(newMessage) {
-    console.log("is the new message socket working?");
     db.getYourUserInfo(socket.request.session.userId)
       .then(data => {
         let completNewMessage = {

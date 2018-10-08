@@ -13,6 +13,7 @@ import Friends from "./friends";
 import Onlineusers from "./Onlineusers";
 import Chat from "./chat";
 import Today from "./today";
+import Onlinesidebar from "./onlinesidebar";
 
 class App extends Component {
   constructor(props) {
@@ -81,7 +82,7 @@ class App extends Component {
           id={id}
           imageUrl={imageUrl}
         />
-
+        <Onlinesidebar />
         <BrowserRouter>
           <div id="profilemaindiv">
             <Route exact path="/online" component={Onlineusers} />

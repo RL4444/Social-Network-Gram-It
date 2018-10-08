@@ -1,12 +1,16 @@
 import React from "react";
 
 function Navbar(props) {
-  console.log("props", props);
   return (
     <div id="navbarstyling">
       <div id="applogocontainer">
         <a href="/">
           <img src="/images/it-logo.png" />
+        </a>
+      </div>
+      <div className="eachnavitem">
+        <a href="/">
+          <img src="/images/news.png" alt="" />
         </a>
       </div>
 

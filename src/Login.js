@@ -17,14 +17,11 @@ class Login extends Component {
       {
         [e.target.name]: e.target.value
       },
-      () => {
-        console.log(this.state);
-      }
+      () => {}
     );
   }
   handleSubmit(e) {
     e.preventDefault();
-    console.log("Running handleSubmit", this.state);
     axios.post("/login", this.state).then(resp => {
       if (resp.data.error) {
         this.setState({

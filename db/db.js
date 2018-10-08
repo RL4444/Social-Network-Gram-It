@@ -13,7 +13,7 @@ if (process.env.DATABASE_URL) {
 }
 
 module.exports.insertUser = function(firstName, lastName, email, password) {
-  console.log("it is getting to inserting a user in your db");
+  // console.log("it is getting to inserting a user in your db");
   const q = `
         INSERT INTO users (first_name, last_name, email, hashed_password)
             VALUES ($1, $2, $3, $4)
@@ -105,7 +105,7 @@ module.exports.editProfile = function(userId, age, city, url) {
     city || null,
     url || null
   ];
-  console.log(userId, parseInt(age), city, url);
+  // console.log(userId, parseInt(age), city, url);
   return db
     .query(q, params)
     .then(results => {
@@ -139,7 +139,7 @@ module.exports.getYourUserInfo = function(userId) {
 };
 
 module.exports.addImage = function(userId, url) {
-  console.log("db userId & url log:", userId, url);
+  // console.log("db userId & url log:", userId, url);
   const q = `
     UPDATE users
     SET profile_pic = $2
@@ -194,7 +194,7 @@ module.exports.getMediaById = function(userprofile) {
 };
 
 module.exports.endfriendship = function(reciever_id, sender_id) {
-  console.log("delete happening in db");
+  // console.log("delete happening in db");
   const params = [reciever_id, sender_id];
   const q = `
         DELETE FROM friendships
@@ -202,12 +202,12 @@ module.exports.endfriendship = function(reciever_id, sender_id) {
         OR (sender_id = $1 AND reciever_id = $2));
         `;
   return db.query(q, params).then(results => {
-    console.log("end friendship in delete db: ", results.rows[0]);
+    //   console.log("end friendship in delete db: ", results.rows[0]);
     return results.rows[0];
   });
 };
 module.exports.acceptfriendship = function(reciever_id, sender_id) {
-  console.log("accept happening in db");
+  // console.log("accept happening in db");
   const params = [reciever_id, sender_id];
   const q = `
         UPDATE friendships
@@ -216,7 +216,7 @@ module.exports.acceptfriendship = function(reciever_id, sender_id) {
         OR (sender_id = $1 AND reciever_id = $2));
         `;
   return db.query(q, params).then(results => {
-    console.log("accept friendship in accept db: ", results.rows[0]);
+    //   console.log("accept friendship in accept db: ", results.rows[0]);
     return results.rows[0];
   });
 };
@@ -228,13 +228,13 @@ module.exports.friendshippending = function(reciever_id, sender_id) {
         RETURNING *;
         `;
   return db.query(q, params).then(results => {
-    console.log("results.rows[0] in post: ", results.rows[0]);
+    // console.log("results.rows[0] in post: ", results.rows[0]);
     return results.rows[0];
   });
 };
 
 module.exports.checkFriendship = function(id1, id2) {
-  console.log("check friendship input values:", id1, id2);
+  // console.log("check friendship input values:", id1, id2);
   const params = [id1, id2];
   const q = `
         SELECT * FROM friendships
@@ -244,10 +244,10 @@ module.exports.checkFriendship = function(id1, id2) {
   return db
     .query(q, params)
     .then(results => {
-      console.log(
-        "info from the check friendship route in db: ",
-        results.rows[0]
-      );
+      // console.log(
+      //   "info from the check friendship route in db: ",
+      //   results.rows[0]
+      // );
       return results.rows[0];
     })
     .catch(err => {

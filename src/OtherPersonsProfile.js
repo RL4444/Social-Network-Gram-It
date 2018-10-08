@@ -40,14 +40,18 @@ class OtherPersonsProfile extends React.Component {
         <h2>profile for {firstName}</h2>
         <div className="profile-flex-layout">
           <div className="eachcolumn">
-            <img className="profilepic" src={imageUrl} alt="" />
+            <img
+              className="profilepic"
+              src={imageUrl || "/images/default.png"}
+              alt=""
+            />
           </div>
           <div className="eachcolumn">
             <div id="OPPlayout">
               <h1 id="oppName">
                 {firstName} {lastName}
               </h1>
-              <p id="oppBio">{bio}</p>
+              <p id="oppBio"> " {bio} "</p>
               <Friendbutton oppId={this.props.match.params.id} />
             </div>
           </div>

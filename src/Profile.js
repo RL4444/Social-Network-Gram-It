@@ -82,10 +82,7 @@ class Profile extends Component {
 
     console.log("state in profile", this.state);
     return (
-      <div>
-        <div id="placeholdernavbar" />
-        <div id="placeholdernavbar" />
-        <div id="placeholdernavbar" />
+      <div id="profile-outer-container">
         <h2>your profile</h2>
         <div className="profile-flex-layout">
           <div className="eachcolumn">
@@ -118,7 +115,7 @@ class Profile extends Component {
                     <p id="biotext"> " {bio} " </p>
                     <p id="biobutton" onClick={toggleShowBio}>
                       {" "}
-                      Click to edit your bio{" "}
+                      EDIT BIO{" "}
                     </p>
                   </div>
                 ) : (
@@ -126,6 +123,14 @@ class Profile extends Component {
                 )}
               </div>
             </div>
+          </div>
+        </div>
+        <div id="video-box">
+          <div id="video-title">
+            <h2>this will be a dynamic video title</h2>
+          </div>
+          <div id="video">
+            <h2>this is going to be the video</h2>
           </div>
         </div>
       </div>

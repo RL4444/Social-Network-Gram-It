@@ -31,20 +31,18 @@ class App extends React.Component {
   render() {
     return (
       <div id="modalimagecontainer">
-        <div id="placeholder" />
-        <input type="file" id="file-field" onChange={this.imageSelected} />
-
-        <div className="imageInfo">
-          <div className="fieldEdit">
-            <label className="selectImage" htmlFor="file-field">
-              <h3 className="param"> Choose New Image? </h3>
-            </label>
-            <div className="inputImitation" />
-          </div>
+        <div className="fieldEdit">
+          <input type="file" id="inputfile" onChange={this.imageSelected} />
+          <label id="labelstyle-uploader" htmlFor="inputfile">
+            {" "}
+            <h2>Select Image</h2>{" "}
+          </label>
+          <div className="inputImitation" />
         </div>
+
         <div className="divButton">
           <button onClick={this.uploadPicture} className="upload">
-            upload! toady
+            upload!
           </button>
         </div>
       </div>

@@ -5,7 +5,7 @@ import axios from "./axios";
 export function userJoined(users) {
   return {
     type: "USER_JOINED",
-    users: users
+    users
   };
 }
 export function onlineUsers(users) {

@@ -26,26 +26,12 @@ class Chat extends React.Component {
   render() {
     const { chatMessages } = this.props;
     if (!chatMessages) {
-      return (
-        <div id="chatpagecontainer">
-          <div>{chatDiv}</div>
-          <form id="chattextenter" onSubmit={this.handleSubmitTextarea}>
-            <h3> Type something!</h3>
-            <textarea
-              id="chatTextArea"
-              name="chatMessage"
-              onChange={this.handleChangeTextarea}
-            />
-            <button type="submit">Send Message</button>
-          </form>
-        </div>
-      );
+      return null;
     }
-
     let chatMsgs = chatMessages.slice(-10);
     const chatDiv = (
       <div id="chatpagecontainer">
-        <h1>Chat Page</h1>
+        <h1>chat page</h1>
 
         {chatMsgs.map(message => (
           <div key={message.date} className="acceptedfriendslayout">
@@ -54,7 +40,7 @@ class Chat extends React.Component {
               src={message.profilePic || "/images/default.png"}
             />{" "}
             <div className="acceptedfriendstextlayout">
-              <div className="biostyler">
+              <div id="biostyler">
                 <div id="message-content">
                   <h3 id="chattextstyling">"{message.content}"</h3>
                 </div>
@@ -70,6 +56,23 @@ class Chat extends React.Component {
             </div>
           </div>
         ))}
+      </div>
+    );
+
+    return (
+      <div id="chatpagecontainer">
+        <div>{chatDiv}</div>
+        <form id="chattextenter" onSubmit={this.handleSubmitTextarea}>
+          <h3> Type something!</h3>
+          <textarea
+            id="chatTextArea"
+            name="chatMessage"
+            onChange={this.handleChangeTextarea}
+          />
+          <button id="chat-button" type="submit">
+            SEND
+          </button>
+        </form>
       </div>
     );
   }

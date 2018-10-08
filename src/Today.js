@@ -10,48 +10,16 @@ class Today extends Component {
       news: []
     };
 
-    this.handleChangeTextarea = this.handleChangeTextarea.bind(this);
-    this.handleSubmitTextarea = this.handleSubmitTextarea.bind(this);
-    this.handleChangeInput = this.handleChangeInput.bind(this);
     this.sortDesription = this.sortDesription.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
   }
-  handleChangeTextarea(e) {
-    this.setState(
-      {
-        [e.target.name]: e.target.value
-      },
-      () => {
-        // console.log(this.state);
-      }
-    );
-  }
-  handleChangeInput(e) {
-    this.setState(
-      {
-        [e.target.name]: e.target.value
-      },
-      () => {
-        // console.log(this.state);
-      }
-    );
-  }
 
-  handleSubmitTextarea(e) {
-    e.preventDefault();
-    axios.post("/uploadBio", this.state).then(resp => {
-      if (resp.data.success) {
-        this.props.setBio(resp.data.info.bio);
-        this.props.toggleShowBio();
-      }
-    });
-  }
   reloadPage() {
     location.reload();
   }
   sortDesription(desc) {
     if (desc == null) {
-      return "  more info to follow...";
+      return `    more info to follow...`;
     } else return `  ${desc}`;
   }
 
@@ -59,7 +27,8 @@ class Today extends Component {
     var urlNews =
       "https://newsapi.org/v2/top-headlines?" +
       "country=us&" +
-      "apiKey=de485aaf260d449baf20235b3a111b5c";
+      "apiKey=" +
+      secrets.NEWS_API_KEY;
 
     var reqNews = new Request(urlNews);
     fetch(reqNews)
@@ -71,7 +40,7 @@ class Today extends Component {
       );
   }
   render(props) {
-    console.log("this.state", this.state.news);
+    // console.log("this.state", this.state.news);
     const {
       firstName,
       lastName,
@@ -86,12 +55,18 @@ class Today extends Component {
       return (
         <div id="newsstreamouter">
           <div id="newsheader">
-            <h2>Hey {firstName}, here are the top stories from today!</h2>
+            <h2>
+              Hey {firstName}, here are the <strong>top stories</strong> from
+              today!
+            </h2>
+            <div id="refresh">
+              {" "}
+              <a href="/">
+                <img src="/images/refresh.svg" alt="" />
+              </a>
+            </div>
           </div>
-          <div id="refresh">
-            {" "}
-            <h1 onClick={this.reloadPage}> Refresh Feed? </h1>{" "}
-          </div>
+
           {this.state.news.map(news => (
             <div key={news.publishedAt}>
               <div id="newsstreamcontainer">

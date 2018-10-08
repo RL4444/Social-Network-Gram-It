@@ -27,19 +27,13 @@ class Friends extends Component {
 
   render() {
     var { user } = this.props;
-    console.log("friendsWannabes", this.props.friends);
+
     if (!this.props.friends || !this.props.pending) {
       return null;
     }
     var listOfFriends = (
       <div id="bigmommafriends">
-        <div id="placeholdernavbar" />
-        <div id="placeholdernavbar" />
-        <div id="placeholdernavbar" />
-
         <h1>friends</h1>
-        <div id="placeholdernavbar" />
-        <div id="placeholdernavbar" />
         {this.props.friends &&
           this.props.friends.map(friend => {
             // console.log("fiends ", friend);
@@ -53,7 +47,7 @@ class Friends extends Component {
                 <div className="acceptedfriendstextlayout">
                   <h3>{friend.first_name}</h3>
                   <button onClick={e => this.endFriendshipButton(friend.id, e)}>
-                    end firendship
+                    UN-FRIEND
                   </button>
                 </div>
               </div>
@@ -64,33 +58,33 @@ class Friends extends Component {
 
     var listOfPendingFriends = (
       <div id="bigmommafriends">
-        <div id="placeholdernavbar" />
-        <div id="placeholdernavbar" />
-
         <h1>friend requests</h1>
         {this.props.pending &&
           this.props.pending.map(friend => {
             console.log("what data do I have?:", friend);
             return (
               <div className="acceptedfriendslayout" key={friend.id}>
-                <img
-                  className="profilepic"
-                  src={friend.profile_pic}
-                  onClick={() => (location.href = "/user/" + friend.id)}
-                  alt=""
-                />
-                <div className="acceptedfriendstextlayout">
-                  <h3>{friend.first_name}</h3>
-                  <button onClick={e => this.acceptFriendsButton(friend.id, e)}>
-                    accept friend
-                  </button>
+                <div>
+                  <img
+                    className="profilepic"
+                    src={friend.profile_pic || "/images/default.png"}
+                    onClick={() => (location.href = "/user/" + friend.id)}
+                    alt=""
+                  />
+                  <div className="acceptedfriendstextlayout">
+                    <h3>{friend.first_name}</h3>
+                    <button
+                      onClick={e => this.acceptFriendsButton(friend.id, e)}
+                    >
+                      ACCEPT
+                    </button>
+                  </div>
                 </div>
               </div>
             );
           })}
       </div>
     );
-    // console.log("this.props in friends render: ", this.props);
     return (
       <div>
         <div>
@@ -124,16 +118,8 @@ class Friends extends Component {
 }
 const mapStateToProps = state => {
   return {
-    //filter is a useful way to iteratte through an array
     pending: state.user && state.user.filter(user => user.status == 1),
     friends: state.user && state.user.filter(user => user.status == 2)
   };
 };
 export default connect(mapStateToProps)(Friends);
-
-// {this.props.pending && this.props.pending.map(pend => {
-//  return (
-//
-//  )
-// })
-// }
