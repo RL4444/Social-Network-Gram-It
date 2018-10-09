@@ -70,6 +70,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(process.env.REACT_APP_NEWS_API_KEY);
     const { firstName, lastName, id, imageUrl, bio, showBio } = this.state;
     if (!this.state.id) {
       return <div>"Loading.. Please wait"</div>;
@@ -139,5 +140,3 @@ class App extends Component {
 }
 
 export default App;
-
-<Logout />;

@@ -11,8 +11,10 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
 const s3 = require("./s3");
+const ck = require("./configkeys");
 const config = require("./config");
 const server = require("http").Server(app);
+// const NEWS_API_KEY = `${process.env.REACT_APP_NEWS_API_KEY}`;
 const io = require("socket.io")(server, { origins: "localhost:8080" });
 
 app.use(cookieParser());
@@ -41,7 +43,8 @@ app.use(express.static("public"));
 
 app.use(compression());
 
-if (process.env.NODE_ENV != "production") {
+if (process.env.NODE_ENV == "production") {
+  console.log("in production");
   app.use(
     "/bundle.js",
     require("http-proxy-middleware")({
@@ -49,6 +52,7 @@ if (process.env.NODE_ENV != "production") {
     })
   );
 } else {
+  console.log("testing mode");
   app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
@@ -153,6 +157,15 @@ app.post("/login", (req, res) => {
     .catch(err => {
       console.log(err);
     });
+});
+
+app.get("/today", (req, res) => {
+  console.log("API", ck.NEWS_API_KEY);
+  if (req.session.userId) {
+    res.json({
+      api_key: secrets.NEWS_API_KEY
+    });
+  }
 });
 
 const handleFile = uploader.single("file");
@@ -278,19 +291,6 @@ app.get("/allmedia", function(req, res) {
   });
 });
 
-// ***************REDUX EVENT EMITTERS FOR SORTING ONLINE AND OFFLINE USERS************
-// //index - server.js event emitter
-// socket.emit("onlineUsers", arrayofOnlineUsers);
-//
-// //in socket.js
-// socket.on("onlineUsers", data => {
-//     // here we add data to redux's global state through dispatch
-//     store.dispatch(pushOnlineUsersToRedux(data));
-// });
-
-// // ********************CHAT MESSAGE REDUX LISTENERS***********************************
-//
-
 app.get("*", requireUser, function(req, res) {
   res.sendFile(__dirname + "/index.html");
 });
@@ -308,16 +308,21 @@ server.listen(8080, function() {
 });
 // app.listen(process.env.PORT || 8080);
 
+// ***************REDUX EVENT EMITTERS FOR SORTING ONLINE AND OFFLINE USERS************
+
 let onlineUsers = {};
 let chatMessages = [];
 
 io.on("connection", function(socket) {
-  console.log("is socket listening?");
+  // console.log("is socket listening?");
   onlineUsers[socket.id] = socket.request.session.userId;
   db.getAllUsers(Object.values(onlineUsers)).then(users => {
-    console.log("online users are : ", users);
+    // console.log("online users are : ", users);
     socket.emit("onlineUsers", users);
   });
+
+  // // ********************CHAT MESSAGE REDUX LISTENERS***********************************
+  //
 
   socket.emit("chatMessages", chatMessages.slice(-10));
 
@@ -362,7 +367,7 @@ io.on("connection", function(socket) {
           content: newMessage,
           date: new Date()
         };
-        console.log("completNewMessage", completNewMessage);
+        // console.log("completNewMessage", completNewMessage);
         chatMessages = [...chatMessages, completNewMessage];
         io.sockets.emit("newMessageBack", completNewMessage);
       })

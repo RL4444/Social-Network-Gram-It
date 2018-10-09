@@ -28,7 +28,7 @@ export function userLeft(users) {
 export function recieveFriendsWannabes(user) {
   // console.log("working!");
   return axios.get("/friends-wannabes").then(data => {
-    console.log("data in actions; ", data.data.results);
+    // console.log("data in actions; ", data.data.results);
     return {
       type: "RECIEVE_FRIENDS_WANNABES",
       user: data.data.results
@@ -37,7 +37,7 @@ export function recieveFriendsWannabes(user) {
 }
 export function acceptFriendRequest(id) {
   return axios.post("/acceptfriendship/" + id + ".json").then(data => {
-    console.log("data in acceptfriendship actions; ", data);
+    // console.log("data in acceptfriendship actions; ", data);
     return {
       type: "ACCEPT_FRIEND_REQUEST",
       user: id
@@ -46,7 +46,7 @@ export function acceptFriendRequest(id) {
 }
 export function endFriendship(id) {
   return axios.post("/endfriendship/" + id + ".json").then(data => {
-    console.log("data in endfriendship actions; ", data.data);
+    // console.log("data in endfriendship actions; ", data.data);
     return {
       type: "END_FRIENDSHIP",
       user: id
@@ -60,7 +60,7 @@ export function pushChatMessagesToRedux(chatMessages) {
   };
 }
 export function newMessageAction(chatMessage) {
-  console.log("newMessage", chatMessage);
+  // console.log("newMessage", chatMessage);
   return {
     type: "NEW_MESSAGE",
     chatMessage

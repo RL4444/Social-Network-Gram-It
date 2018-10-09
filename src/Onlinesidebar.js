@@ -3,7 +3,7 @@ import axios from "./axios";
 import { connect } from "react-redux";
 
 const mapStateToProps = state => {
-  console.log("state in onlinesidebar ", state);
+  // console.log("state in onlinesidebar ", state);
   return {
     users: state.users
   };

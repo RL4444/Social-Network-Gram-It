@@ -1,5 +1,5 @@
 export default function(state = {}, action) {
-  console.log("actions in reducers:", action);
+  // console.log("actions in reducers:", action);
   if (action.type == "RECIEVE_FRIENDS_WANNABES") {
     state = Object.assign({}, state, {
       user: action.user
@@ -25,7 +25,7 @@ export default function(state = {}, action) {
     state = {
       ...state,
       user: state.user.map(user => {
-        console.log("user in reducers ACCEPT_FRIEND_REQUEST", user);
+        // console.log("user in reducers ACCEPT_FRIEND_REQUEST", user);
         if (user.id != action.user) {
           return user;
         } else {
@@ -56,7 +56,7 @@ export default function(state = {}, action) {
     };
   }
   if (action.type == "PUSH_CHAT_MESSAGES_TO_REDUX") {
-    console.log("pushChatMessagesToRedux", action.chatMessages);
+    // console.log("pushChatMessagesToRedux", action.chatMessages);
     state = {
       ...state,
       chatMessages: action.chatMessages

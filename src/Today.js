@@ -7,28 +7,20 @@ class Today extends Component {
   constructor(props) {
     super();
     this.state = {
-      news: []
+      news: [],
+      apikey: ""
     };
 
     this.sortDesription = this.sortDesription.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
+    this.getNews = this.getNews.bind(this);
   }
-
-  reloadPage() {
-    location.reload();
-  }
-  sortDesription(desc) {
-    if (desc == null) {
-      return `    more info to follow...`;
-    } else return `  ${desc}`;
-  }
-
-  componentDidMount() {
+  getNews() {
     var urlNews =
       "https://newsapi.org/v2/top-headlines?" +
       "country=us&" +
       "apiKey=" +
-      secrets.NEWS_API_KEY;
+      apikey;
 
     var reqNews = new Request(urlNews);
     fetch(reqNews)
@@ -39,8 +31,30 @@ class Today extends Component {
         })
       );
   }
+  reloadPage() {
+    location.reload();
+  }
+  sortDesription(desc) {
+    if (desc == null) {
+      return `    more info to follow...`;
+    } else return `  ${desc}`;
+  }
+
+  componentDidMount() {
+    console.log("nak", nak);
+    axios
+      .get("/today")
+      .then(({ data }) => {
+        console.log("data", data);
+        this.setState({
+          apikey: data.api_key
+        });
+      })
+      .then(() => {
+        this.getNews();
+      });
+  }
   render(props) {
-    // console.log("this.state", this.state.news);
     const {
       firstName,
       lastName,
