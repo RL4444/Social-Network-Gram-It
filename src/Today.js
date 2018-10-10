@@ -41,7 +41,6 @@ class Today extends Component {
   }
 
   componentDidMount() {
-    console.log("nak", nak);
     axios
       .get("/today")
       .then(({ data }) => {

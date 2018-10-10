@@ -160,7 +160,6 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/today", (req, res) => {
-  console.log("API", ck.NEWS_API_KEY);
   if (req.session.userId) {
     res.json({
       api_key: secrets.NEWS_API_KEY
@@ -303,10 +302,9 @@ function requireUser(req, res, next) {
   }
 }
 
-server.listen(8080, function() {
-  console.log("go ahead caller, I'm listening.");
+server.listen(process.env.PORT || 8080, function() {
+  console.log("I'm listening.");
 });
-// app.listen(process.env.PORT || 8080);
 
 // ***************REDUX EVENT EMITTERS FOR SORTING ONLINE AND OFFLINE USERS************
 
