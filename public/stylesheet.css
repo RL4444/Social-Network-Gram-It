@@ -78,6 +78,7 @@ h3 {
 }
 
 h4 {
+  font-size: 1.5em;
   font-family: "Ubuntu", sans-serif;
   text-align: center;
 }
@@ -160,8 +161,21 @@ h4 {
   flex-direction: column;
 }
 
-#registrationformdiv {
-  width: 30%;
+#registrationformdiv form {
+  width: 100%;
+}
+#registrationformdiv input {
+  height: 5vh;
+  font-size: 1em;
+  font-family: "Ubuntu", sans-serif;
+  min-width: 95%;
+  border: 1px solid navy;
+  margin-top: 1%;
+  border-radius: 2px;
+}
+
+.formitem {
+  width: 100%;
 }
 
 #welcomedataform {
@@ -174,6 +188,15 @@ h4 {
 }
 .formstyler {
   margin-top: 10%;
+}
+#welcomedataform input {
+  height: 5vh;
+  font-size: 1em;
+  font-family: "Ubuntu", sans-serif;
+  width: 95%;
+  border: 1px solid navy;
+  margin-top: 1%;
+  border-radius: 2px;
 }
 
 .reglink {
@@ -344,11 +367,11 @@ h4 {
 
 #applogocontainer {
   margin-left: 1%;
-  margin-top: 1%;
+  margin-top: 0.5%;
   width: 30%;
 }
 #applogocontainer img {
-  width: 22%;
+  width: 28%;
 }
 
 #cornerpic-container {
@@ -463,6 +486,8 @@ input {
 }
 
 #video-box {
+  position: relative;
+  margin-top: 35%;
   margin: 0 auto;
   width: 80%;
   border: 5px solid rgb(4, 50, 168, 0.5);
@@ -591,18 +616,18 @@ input {
   margin-top: 5%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   /* object-fit: cover; */
 }
 
 .acceptedfriendslayout img {
   object-fit: cover;
-  max-width: 10vw;
-  max-height: 10vh;
+  width: 13vw;
+  height: 15vh;
 }
 
 .acceptedfriendstextlayout {
-  width: 50%;
+  width: 40%;
   text-align: left;
 }
 

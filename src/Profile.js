@@ -83,7 +83,6 @@ class Profile extends Component {
     console.log("state in profile", this.state);
     return (
       <div id="profile-outer-container">
-        <h2>your profile</h2>
         <div className="profile-flex-layout">
           <div className="eachcolumn">
             <img
@@ -108,6 +107,9 @@ class Profile extends Component {
                       name="bio"
                       onChange={this.handleChangeTextarea}
                     />
+
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
                     <button type="submit">Submit</button>
                   </form>
                 ) : bio ? (

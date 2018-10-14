@@ -30,12 +30,12 @@ io.use(function(socket, next) {
   cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
 
-// app.use(csurf());
+app.use(csurf());
 
-// app.use(function(req, res, next) {
-//     res.cookie("mytoken", req.csrfToken());
-//     next();
-// });
+app.use(function(req, res, next) {
+  res.cookie("mytoken", req.csrfToken());
+  next();
+});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -255,10 +255,8 @@ app.post("/friendshippending/:id.json", function(req, res) {
 ///////////////////FRIENDS AND WANNABES ROUTE FROM DB////////////////////////////
 
 app.get("/friends-wannabes", function(req, res) {
-  console.log("req.session", req.session);
-
   db.friendsAndWannabes(req.session.userId).then(results => {
-    console.log("results from db: ", results);
+    // console.log("results from db: ", results);
     res.json({ results });
   });
 });

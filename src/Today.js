@@ -12,24 +12,7 @@ class Today extends Component {
 
     this.sortDesription = this.sortDesription.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
-    // this.getNews = this.getNews.bind(this);
   }
-  // getNews() {
-  //   var urlNews =
-  //     "https://newsapi.org/v2/top-headlines?" +
-  //     "country=us&" +
-  //     "apiKey=" +
-  //     apikey;
-  //
-  //   var reqNews = new Request(urlNews);
-  //   fetch(reqNews)
-  //     .then(response => response.json())
-  //     .then(json =>
-  //       this.setState({
-  //         news: json.articles
-  //       })
-  //     );
-  // }
   reloadPage() {
     location.reload();
   }

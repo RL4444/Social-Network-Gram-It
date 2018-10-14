@@ -69,6 +69,9 @@ class Chat extends React.Component {
             name="chatMessage"
             onChange={this.handleChangeTextarea}
           />
+
+          <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+
           <button id="chat-button" type="submit">
             SEND
           </button>

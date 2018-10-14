@@ -35,11 +35,11 @@ class Login extends Component {
   render() {
     return (
       <div id="welcomedataform">
-        <h1 className="formtitle">Login</h1>
+        <h2 className="formtitle">Login</h2>
         <div className="formstyler">
           {this.state.error ? <div>ERROR: {this.state.error}</div> : null}
           <form onSubmit={this.handleSubmit} className="">
-            <div>
+            <div className="formitem">
               <input
                 onChange={this.handleChange}
                 type="text"
@@ -47,7 +47,7 @@ class Login extends Component {
                 placeholder="email"
               />
             </div>
-            <div>
+            <div className="formitem">
               <input
                 onChange={this.handleChange}
                 type="password"
@@ -55,7 +55,10 @@ class Login extends Component {
                 placeholder="password"
               />
             </div>
-            <button type="submit">Submit</button>
+            <div>
+              <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+            </div>
+            <button type="submit">SUBMIT</button>
           </form>
         </div>
         <div className="reglink">

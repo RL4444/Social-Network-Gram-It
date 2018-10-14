@@ -14,13 +14,15 @@ import Onlineusers from "./Onlineusers";
 import Chat from "./chat";
 import Today from "./today";
 import Onlinesidebar from "./onlinesidebar";
+import SearchBar from "./SearchBar";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       upLoaderIsVisible: false,
-      showBio: false
+      showBio: false,
+      showSearch: false
     };
     this.showUploader = this.showUploader.bind(this);
     this.setImage = this.setImage.bind(this);
@@ -41,6 +43,9 @@ class App extends Component {
       imageUrl: url,
       upLoaderIsVisible: false
     });
+  }
+  showSearch() {
+    console.log("show search working");
   }
   setBio(bio) {
     this.setState({
@@ -83,6 +88,7 @@ class App extends Component {
           id={id}
           imageUrl={imageUrl}
         />
+        <SearchBar />
         <Onlinesidebar />
         <BrowserRouter>
           <div id="profilemaindiv">

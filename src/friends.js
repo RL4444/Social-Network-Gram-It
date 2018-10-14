@@ -36,7 +36,6 @@ class Friends extends Component {
         <h1>friends</h1>
         {this.props.friends &&
           this.props.friends.map(friend => {
-            // console.log("fiends ", friend);
             return (
               <div className="acceptedfriendslayout" key={friend.id}>
                 <img
@@ -45,7 +44,9 @@ class Friends extends Component {
                   alt=""
                 />
                 <div className="acceptedfriendstextlayout">
-                  <h3>{friend.first_name}</h3>
+                  <h2 className="friend-name">
+                    {friend.first_name} {friend.last_name}
+                  </h2>
                   <button onClick={e => this.endFriendshipButton(friend.id, e)}>
                     UN-FRIEND
                   </button>

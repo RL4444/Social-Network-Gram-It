@@ -43,20 +43,21 @@ class Registration extends Component {
     return (
       <div id="welcomedataform">
         <div>
-          <h1 className="formtitle">Registration</h1>
+          <h2 className="formtitle">Registration</h2>
         </div>
-        <div className="formstyler">
-          {this.state.error ? <div>ERROR: {this.state.error}</div> : null}
-          <form onSubmit={this.handleSubmit} className="">
-            <div id="registrationformdiv">
+        <div id="registrationformdiv">
+          <form onSubmit={this.handleSubmit}>
+            {this.state.error ? <div>ERROR: {this.state.error}</div> : null}
+            <div className="formitem">
               <input
+                className="formitem"
                 onChange={this.handleChange}
                 type="text"
                 name="firstName"
                 placeholder="name"
               />
             </div>
-            <div>
+            <div className="formitem">
               <input
                 onChange={this.handleChange}
                 type="text"
@@ -64,7 +65,7 @@ class Registration extends Component {
                 placeholder="last name"
               />
             </div>
-            <div>
+            <div className="formitem">
               <input
                 onChange={this.handleChange}
                 type="email"
@@ -72,7 +73,7 @@ class Registration extends Component {
                 placeholder="email"
               />
             </div>
-            <div>
+            <div className="formitem">
               <input
                 onChange={this.handleChange}
                 type="password"
@@ -80,8 +81,11 @@ class Registration extends Component {
                 placeholder="password"
               />
             </div>
+            <div className="formitem">
+              <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+            </div>
             <div>
-              <button type="submit">Submit</button>
+              <button type="submit">SUBMIT</button>
             </div>
           </form>
         </div>
