@@ -15,8 +15,16 @@ const ck = require("./configkeys");
 const config = require("./config");
 const server = require("http").Server(app);
 // const NEWS_API_KEY = `${process.env.REACT_APP_NEWS_API_KEY}`;
-const io = require("socket.io")(server, { origins: "localhost:8080" });
 const news = require("./newsapi");
+
+let domain;
+if (process.env.NODE_ENV == "production") {
+  domain = "https://gram-it-social.herokuapp.com/:*";
+} else {
+  domain = "localhost:8080";
+}
+
+const io = require("socket.io")(server, { origins: domain });
 
 app.use(cookieParser());
 
@@ -44,8 +52,7 @@ app.use(express.static("public"));
 
 app.use(compression());
 
-if (process.env.NODE_ENV == "production") {
-  console.log("in production");
+if (process.env.NODE_ENV != "production") {
   app.use(
     "/bundle.js",
     require("http-proxy-middleware")({
@@ -53,7 +60,6 @@ if (process.env.NODE_ENV == "production") {
     })
   );
 } else {
-  console.log("testing mode");
   app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
