@@ -16,6 +16,7 @@ const config = require("./config");
 const server = require("http").Server(app);
 // const NEWS_API_KEY = `${process.env.REACT_APP_NEWS_API_KEY}`;
 const io = require("socket.io")(server, { origins: "localhost:8080" });
+const news = require("./newsapi");
 
 app.use(cookieParser());
 
@@ -159,12 +160,9 @@ app.post("/login", (req, res) => {
     });
 });
 
-app.get("/today", (req, res) => {
-  if (req.session.userId) {
-    res.json({
-      api_key: secrets.NEWS_API_KEY
-    });
-  }
+app.get("/today", async (req, res) => {
+  const result = await news.getNewsStream();
+  res.json(result);
 });
 
 const handleFile = uploader.single("file");

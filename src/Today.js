@@ -7,30 +7,29 @@ class Today extends Component {
   constructor(props) {
     super();
     this.state = {
-      news: [],
-      apikey: ""
+      news: []
     };
 
     this.sortDesription = this.sortDesription.bind(this);
     this.reloadPage = this.reloadPage.bind(this);
-    this.getNews = this.getNews.bind(this);
+    // this.getNews = this.getNews.bind(this);
   }
-  getNews() {
-    var urlNews =
-      "https://newsapi.org/v2/top-headlines?" +
-      "country=us&" +
-      "apiKey=" +
-      apikey;
-
-    var reqNews = new Request(urlNews);
-    fetch(reqNews)
-      .then(response => response.json())
-      .then(json =>
-        this.setState({
-          news: json.articles
-        })
-      );
-  }
+  // getNews() {
+  //   var urlNews =
+  //     "https://newsapi.org/v2/top-headlines?" +
+  //     "country=us&" +
+  //     "apiKey=" +
+  //     apikey;
+  //
+  //   var reqNews = new Request(urlNews);
+  //   fetch(reqNews)
+  //     .then(response => response.json())
+  //     .then(json =>
+  //       this.setState({
+  //         news: json.articles
+  //       })
+  //     );
+  // }
   reloadPage() {
     location.reload();
   }
@@ -41,19 +40,14 @@ class Today extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get("/today")
-      .then(({ data }) => {
-        console.log("data", data);
-        this.setState({
-          apikey: data.api_key
-        });
-      })
-      .then(() => {
-        this.getNews();
+    axios.get("/today").then(({ data }) => {
+      this.setState({
+        news: data
       });
+    });
   }
   render(props) {
+    console.log("this.state in today", this.state);
     const {
       firstName,
       lastName,
