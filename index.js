@@ -19,7 +19,7 @@ const news = require("./newsapi");
 
 let domain;
 if (process.env.NODE_ENV == "production") {
-  domain = "https://gram-it-social.herokuapp.com/:*";
+  domain = "https://gram-it-social.herokuapp.com/";
 } else {
   domain = "localhost:8080";
 }
@@ -34,6 +34,7 @@ const cookieSessionMiddleware = cookieSession({
 });
 
 app.use(cookieSessionMiddleware);
+
 io.use(function(socket, next) {
   cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
@@ -291,6 +292,8 @@ app.get("/allmedia", function(req, res) {
     });
   });
 });
+
+/////////////////////////MIDDLE WARE AND PORTS//////////////////////////////////////////
 
 app.get("*", requireUser, function(req, res) {
   res.sendFile(__dirname + "/index.html");
