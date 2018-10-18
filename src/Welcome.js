@@ -3,11 +3,13 @@ import { HashRouter, Route, Link } from "react-router-dom";
 import Registration from "./registration";
 import Login from "./login";
 import Home from "./Home";
+import DataWarning from "./DataWarning";
 
 function Welcome() {
   return (
     <HashRouter>
       <div id="welcome">
+        <DataWarning />
         <div id="welcome-links">
           <Link to="/reg"> Registration </Link>
           <Link to="/"> Welcome </Link>

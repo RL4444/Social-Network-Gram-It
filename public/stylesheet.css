@@ -3,10 +3,7 @@
 * {
   box-sizing: border-box;
   margin: 0;
-
-  background-color: white;
   border-radius: 10px;
-  /* border: 1px solid green; */
 }
 
 body {
@@ -14,13 +11,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: rgb(82, 142, 219); */
   background-color: rgb(132, 147, 179, 0.6);
   border-radius: 0;
   background: allowtransparency;
 }
 
 #app {
+  background-color: white;
   width: 70vw;
   min-height: 100vh;
   border: 4px solid rgb(132, 147, 179, 0.6);
@@ -46,7 +43,7 @@ button {
   font-weight: bold;
   font-family: "Ubuntu", sans-serif;
   margin: 0 auto;
-  border-radius: 3px;
+  border-radius: 15px;
   background-color: rgb(82, 142, 219);
   padding: 10px 5px 10px;
   width: 95%;
@@ -104,6 +101,56 @@ h4 {
 
 /* ////////////////WELCOME PAGE STYLING///////////////// */
 
+/* ///////// WARNING MODAL  */
+
+.black-background {
+  width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(70, 83, 251, 0.56);
+  position: absolute;
+}
+
+#warningmodalimagecontainer {
+  position: absolute;
+  margin: 0 auto;
+  top: 20%;
+  left: 25%;
+  z-index: 125;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  background-color: grey;
+  width: 50%;
+  height: 50vh;
+  border-radius: 12px;
+}
+
+.warning-text-container {
+  width: 85%;
+  text-align: center;
+  margin-bottom: 15%;
+}
+
+.warning-text {
+  font-size: 2em;
+  /* font-family: "Roboto Mono", monospace; */
+  font-family: "Ubuntu", sans-serif;
+  color: white;
+}
+
+.divButton {
+  margin-left: 12%;
+  width: 70%;
+}
+
+/* /////////////////////// */
+
 #linkcontainerwelcomepage {
   margin-top: 12%;
   margin-left: 0%;
@@ -156,6 +203,7 @@ h4 {
 }
 
 #welcome {
+  background-color: white;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -344,7 +392,7 @@ h4 {
 .eachnavitem img:hover {
   height: 110%;
   background-color: rgb(4, 50, 168, 0.5);
-  padding: 5px;
+  padding: 2px;
   transition-duration: 0.2s;
 }
 
@@ -546,7 +594,6 @@ input {
 
 .divButton {
   font-size: 3em;
-  background-color: rgba(0, 0, 0, 0.3);
 }
 
 #inputfile {
