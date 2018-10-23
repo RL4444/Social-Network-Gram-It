@@ -19,14 +19,12 @@ const news = require("./newsapi");
 let domain;
 
 if (process.env.NODE_ENV == "production") {
-  domain = "https://gram-it-social.herokuapp.com/";
+  domain = "https://gram-it-social.herokuapp.com:*";
 } else {
   domain = "localhost:8080";
 }
 
-var io = require("socket.io")(server, { origins: domain });
-
-app.use(cookieParser());
+const io = require("socket.io")(server, { origins: domain });
 
 const cookieSessionMiddleware = cookieSession({
   secret: `Yolo Init Bruv`,
@@ -38,6 +36,8 @@ app.use(cookieSessionMiddleware);
 io.use(function(socket, next) {
   cookieSessionMiddleware(socket.request, socket.request.res, next);
 });
+
+app.use(cookieParser());
 
 app.use(csurf());
 
@@ -350,7 +350,7 @@ let onlineUsers = {};
 let chatMessages = [];
 
 io.on("connection", function(socket) {
-  // console.log("is socket listening?");
+  console.log("is socket listening?");
   onlineUsers[socket.id] = socket.request.session.userId;
   db.getAllUsers(Object.values(onlineUsers)).then(users => {
     // console.log("online users are : ", users);
