@@ -59,11 +59,14 @@ class Profile extends Component {
   }
 
   uploadYTurl() {
-    axios.post("/insertmedia", this.state).then(resp => {
-      if (resp.data.success) {
-        this.sortYTvideo();
-      }
-    });
+    axios
+      .post("/insertmedia", this.state)
+      .then(resp => {
+        if (resp.data.success) {
+          this.sortYTvideo();
+        }
+      })
+      .then(() => window.location.reload());
     // .then(() => this.props.showYouTubeUploader());
   }
 
