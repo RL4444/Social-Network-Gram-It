@@ -8,7 +8,7 @@ import Uploader from "./uploader";
 import OtherPersonsProfile from "./OtherPersonsProfile";
 import Logout from "./logout";
 import Friendbutton from "./Friendbutton";
-import Navbar from "./navbar";
+import Navbar from "./Navbar";
 import Friends from "./friends";
 import Onlineusers from "./Onlineusers";
 import Chat from "./chat";
@@ -22,13 +22,18 @@ class App extends Component {
     this.state = {
       upLoaderIsVisible: false,
       showBio: false,
-      showSearch: false
+      showSearch: false,
+      YTuploaderVisable: false,
+      youtubeurl: ""
     };
     this.showUploader = this.showUploader.bind(this);
     this.setImage = this.setImage.bind(this);
     this.toggleShowBio = this.toggleShowBio.bind(this);
     this.setBio = this.setBio.bind(this);
     this.closeUploader = this.closeUploader.bind(this);
+    this.showYouTubeUploader = this.showYouTubeUploader.bind(this);
+    this.loadUserInfo = this.loadUserInfo.bind(this);
+    this.loadUserMedia = this.loadUserMedia.bind(this);
   }
   showUploader() {
     this.setState(
@@ -44,12 +49,18 @@ class App extends Component {
       upLoaderIsVisible: false
     });
   }
+
   showSearch() {
     console.log("show search working");
   }
   setBio(bio) {
     this.setState({
       bio: bio
+    });
+  }
+  showYouTubeUploader() {
+    this.setState({
+      YTuploaderVisable: !this.state.YTuploaderVisable
     });
   }
   toggleShowBio() {
@@ -62,7 +73,7 @@ class App extends Component {
       upLoaderIsVisible: false
     });
   }
-  componentDidMount() {
+  loadUserInfo() {
     axios.get("/user").then(({ data }) => {
       this.setState({
         id: data.id,
@@ -73,10 +84,35 @@ class App extends Component {
       });
     });
   }
+  loadUserMedia() {
+    console.log("hitting loadUserMedia method in App");
+    axios.get("/allmedia").then(({ data }) => {
+      console.log(
+        "data in app parent component - checkign for media loading",
+        data.youtubeurl
+      );
+      this.setState({
+        youtubeurl: data.youtubeurl
+      });
+    });
+  }
+
+  componentDidMount() {
+    this.loadUserInfo();
+    this.loadUserMedia();
+  }
 
   render() {
-    console.log(process.env.REACT_APP_NEWS_API_KEY);
-    const { firstName, lastName, id, imageUrl, bio, showBio } = this.state;
+    const {
+      firstName,
+      lastName,
+      id,
+      imageUrl,
+      bio,
+      showBio,
+      youtubeurl,
+      YTuploaderVisable
+    } = this.state;
     if (!this.state.id) {
       return <div>"Loading.. Please wait"</div>;
     }
@@ -110,6 +146,9 @@ class App extends Component {
                   clickHandler={this.showUploader}
                   setBio={this.setBio}
                   bio={bio}
+                  youtubeurl={youtubeurl}
+                  showYouTubeUploader={this.showYouTubeUploader}
+                  YTuploaderVisable={YTuploaderVisable}
                 />
               )}
             />
@@ -128,7 +167,6 @@ class App extends Component {
             <Route exact path="/user/:id/" component={OtherPersonsProfile} />
           </div>
         </BrowserRouter>
-
         {this.state.upLoaderIsVisible && (
           <div id="uploadermodalbackground">
             <Uploader

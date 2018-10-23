@@ -6,16 +6,13 @@ class OtherPersonsProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.getOPPuser = this.getOPPuser.bind(this);
+    this.getOPPmedia = this.getOPPmedia.bind(this);
   }
-
-  componentDidMount() {
+  getOPPuser() {
     axios
       .get("/user/" + this.props.match.params.id + ".json")
       .then(({ data }) => {
-        // console.log(
-        //     "data from componentDidMount on other persons profile component axios request: ",
-        //     data
-        // );
         if (data.redirect) {
           this.props.history.push("/");
         } else {
@@ -30,14 +27,29 @@ class OtherPersonsProfile extends React.Component {
       });
   }
 
+  getOPPmedia() {
+    axios
+      .get("/usersmedia/" + this.props.match.params.id + ".json")
+      .then(({ data }) => {
+        if (data.redirect) {
+          this.props.history.push("/");
+        } else {
+          this.setState({
+            youtubeurl: data.youtubeurl
+          });
+        }
+      });
+  }
+  componentDidMount() {
+    this.getOPPuser();
+    this.getOPPmedia();
+  }
+
   render() {
+    console.log("this.state in opp", this.state);
     const { firstName, lastName, id, imageUrl, bio } = this.state;
     return (
       <div>
-        <div id="placeholdernavbar" />
-        <div id="placeholdernavbar" />
-        <div id="placeholdernavbar" />
-        <h2>profile for {firstName}</h2>
         <div className="profile-flex-layout">
           <div className="eachcolumn">
             <img
@@ -56,6 +68,19 @@ class OtherPersonsProfile extends React.Component {
             </div>
           </div>
         </div>
+        {this.state.youtubeurl ? (
+          <div id="video-box">
+            <div id="video-title">
+              <div id="video-button-and-logo">
+                <div id="videoplayerlogoopp">
+                  <img src="./images/vp.png" alt="" />
+                </div>
+                <div className="videoplayertitle" />
+              </div>
+            </div>
+            <div dangerouslySetInnerHTML={{ __html: this.state.youtubeurl }} />
+          </div>
+        ) : null}
       </div>
     );
   }

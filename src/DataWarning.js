@@ -22,11 +22,7 @@ class Welcome extends React.Component {
       return ` `;
     }, 2000);
   }
-  componentDidMount(props) {
-    // if (this.state.warning) {
-    //     showWarning == true;
-    // }
-  }
+  componentDidMount(props) {}
   render() {
     if (this.state.warning) {
       return (

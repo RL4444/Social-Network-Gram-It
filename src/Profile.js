@@ -7,25 +7,21 @@ class Profile extends Component {
   constructor(props) {
     super();
     this.state = {
-      spotifyurl: "",
-      youtubeurl: "",
       error: null
     };
 
     this.handleChangeTextarea = this.handleChangeTextarea.bind(this);
     this.handleSubmitTextarea = this.handleSubmitTextarea.bind(this);
     this.handleChangeInput = this.handleChangeInput.bind(this);
-    this.getSpotifyUrl = this.getSpotifyUrl.bind(this);
-    this.setSpotifyUrl = this.setSpotifyUrl.bind(this);
+    this.sortYTvideo = this.sortYTvideo.bind(this);
+    this.uploadYTurl = this.uploadYTurl.bind(this);
   }
   handleChangeTextarea(e) {
     this.setState(
       {
         [e.target.name]: e.target.value
       },
-      () => {
-        // console.log(this.state);
-      }
+      () => {}
     );
   }
   handleChangeInput(e) {
@@ -33,9 +29,7 @@ class Profile extends Component {
       {
         [e.target.name]: e.target.value
       },
-      () => {
-        // console.log(this.state);
-      }
+      () => {}
     );
   }
 
@@ -48,24 +42,32 @@ class Profile extends Component {
       }
     });
   }
-  getSpotifyUrl() {
-    axios.get("/allmedia").then(data => {
-      if (data.data.success) {
-        this.setState({
-          spotifyurl: data.data.spotifyurl,
-          youtubeurl: data.data.youtubeurl
-        });
+  sortYTvideo() {
+    if (!this.props.youtubeurl) {
+      return (
+        <iframe
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/3R1ysTlxiVY"
+          frameBorder="0"
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+        />
+      );
+    } else return;
+    // { __html: "this.props.youtubeurl" };
+  }
+
+  uploadYTurl() {
+    axios.post("/insertmedia", this.state).then(resp => {
+      if (resp.data.success) {
+        this.sortYTvideo();
       }
     });
+    // .then(() => this.props.showYouTubeUploader());
   }
-  setSpotifyUrl(spotifyurl) {
-    axios.post("/insertspotifyurl", { spotifyurl }).then(resp => {
-      if (resp.data.success)
-        this.setState({
-          spotifyurl: resp.data.spotifyurl
-        });
-    });
-  }
+
+  componentDidMount() {}
 
   render(props) {
     const {
@@ -75,12 +77,12 @@ class Profile extends Component {
       imageUrl,
       showBio,
       toggleShowBio,
-      bio
+      bio,
+      showYouTubeUploader,
+      uploadYTurl
     } = this.props;
 
     const { spotifyurl, youtubeurl } = this.state;
-
-    console.log("state in profile", this.state);
     return (
       <div id="profile-outer-container">
         <div className="profile-flex-layout">
@@ -110,7 +112,7 @@ class Profile extends Component {
 
                     <input type="hidden" name="_csrf" value="{{csrfToken}}" />
 
-                    <button type="submit">Submit</button>
+                    <button type="submit">SUBMIT</button>
                   </form>
                 ) : bio ? (
                   <div id="biocontainer">
@@ -121,7 +123,9 @@ class Profile extends Component {
                     </p>
                   </div>
                 ) : (
-                  <p onClick={toggleShowBio}>Click to add a bio</p>
+                  <p id="biobutton" onClick={toggleShowBio}>
+                    ADD BIO
+                  </p>
                 )}
               </div>
             </div>
@@ -129,11 +133,42 @@ class Profile extends Component {
         </div>
         <div id="video-box">
           <div id="video-title">
-            <h2>this will be a dynamic video title</h2>
+            <div id="video-button-and-logo">
+              <div id="videoplayerlogo">
+                <img src="./images/vp.png" alt="" />
+              </div>
+              <div className="videoplayertitle">
+                <h2>VIDEO BOX</h2>
+              </div>
+              <div className="video-button" onClick={showYouTubeUploader}>
+                {this.props.YTuploaderVisable ? (
+                  <p id="biobutton">CLOSE UPLOADER</p>
+                ) : (
+                  <p id="biobutton">CHANGE VIDEO</p>
+                )}
+              </div>
+            </div>
+            {this.props.YTuploaderVisable ? (
+              <div>
+                <p>
+                  hint: if you need help in finding an embed code - see video
+                  below
+                </p>
+
+                <input
+                  onChange={this.handleChangeInput}
+                  type="text"
+                  name="youtubeurl"
+                  placeholder="copy full embed code in here"
+                />
+                <button type="button" onClick={this.uploadYTurl}>
+                  UPLOAD
+                </button>
+              </div>
+            ) : null}
           </div>
-          <div id="video">
-            <h2>this is going to be the video</h2>
-          </div>
+          <div dangerouslySetInnerHTML={{ __html: this.props.youtubeurl }} />
+          <div id="video"> {this.sortYTvideo()}</div>
         </div>
       </div>
     );

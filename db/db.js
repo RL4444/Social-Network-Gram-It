@@ -1,9 +1,5 @@
 const spicedPg = require("spiced-pg");
 
-// var dbUrl =
-//     process.env.DATABASE_URL ||
-//     "postgres://spicedling:password@localhost:5432/socialnetwork";
-
 var db;
 
 if (process.env.DATABASE_URL) {
@@ -166,29 +162,31 @@ module.exports.addBio = function(userId, bio) {
       return results.rows[0];
     })
     .catch(err => {
-      // console.log("this is workinggggggggggggggggg");
       return Promise.reject(err);
     });
 };
 
-module.exports.insertMediaSpotify = function(userprofile, spotifyurl) {
-  const params = [userprofile, spotifyurl];
+module.exports.insertMedia = function(userid, youtubeurl) {
   const q = `
-    INSERT INTO media (userid, spotifyurl)
-    VALUES ($1, $2)
-    RETURNING *
+  INSERT INTO media (userid, youtubeurl)
+  VALUES ($1, $2)
+  ON CONFLICT (userid)
+  DO UPDATE SET youtubeurl = $2
+  RETURNING *
     `;
-
+  const params = [userid, youtubeurl];
   return db.query(q, params).then(results => {
+    // console.log("it's gotten through insert media query");
     return results.rows[0];
   });
 };
 
 module.exports.getMediaById = function(userprofile) {
-  const q = `
-    SELECT * FROM media WHERE userid = $1 RETURNING *`;
   const params = [userprofile];
+  const q = `
+    SELECT * FROM media WHERE userid = $1`;
   return db.query(q, params).then(results => {
+    // console.log("is it returning allmedia results", results.rows[0]);
     return results.rows[0];
   });
 };
@@ -283,3 +281,5 @@ exports.getAllUsers = function(ids) {
 // SELECT * FROM friendships
 // WHERE ((sender_id = $1 AND receiver_id =$2)
 // OR (sender_id = $2 AND receiver_id = $1))
+
+////rest of media query to do

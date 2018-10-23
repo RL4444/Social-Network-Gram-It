@@ -99,6 +99,10 @@ h4 {
   display: hidden;
 }
 
+input {
+  text-align: center;
+}
+
 /* ////////////////WELCOME PAGE STYLING///////////////// */
 
 /* ///////// WARNING MODAL  */
@@ -374,6 +378,21 @@ h4 {
   border: 5px solid rgb(132, 147, 179, 0.6);
 }
 
+#search-bar {
+  margin-top: 3%;
+  width: 15%;
+  display: flex;
+  flex-direction: row;
+}
+.search-icon {
+  width: 20%;
+  object-fit: cover;
+}
+.search-icon img {
+  background-color: white;
+  height: 60%;
+}
+
 .eachnavitem {
   opacity: inherit;
   margin-top: 2%;
@@ -508,7 +527,7 @@ h4 {
   margin-left: 3%;
   font-weight: bold;
   font-family: "Ubuntu", sans-serif;
-  border-radius: 1px;
+  border-radius: 12px;
   background-color: rgb(82, 142, 219);
   padding: 10px 5px 10px;
   width: 50%;
@@ -534,11 +553,52 @@ input {
 }
 
 #video-box {
-  position: relative;
+  text-align: center;
+  /* position: relative; */
   margin-top: 35%;
   margin: 0 auto;
   width: 80%;
   border: 5px solid rgb(4, 50, 168, 0.5);
+}
+#video-button-and-logo {
+  margin-bottom: 3%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.videoplayertitle {
+  width: 35%;
+}
+
+.video-button {
+  margin-left: 10%;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 2%;
+}
+#videoplayerlogo {
+  max-width: 20%;
+}
+#videoplayerlogo img {
+  width: 20%;
+}
+#videoplayerlogoopp {
+  max-width: 100%;
+}
+#videoplayerlogoopp img {
+  /* width: 20%; */
+}
+#video-box input {
+  font-size: 1.5em;
+  width: 60%;
+}
+#video-box h2:hover {
+  transition-duration: 0.4;
+  color: rgb(136, 175, 224);
+  cursor: pointer;
+}
+#video-box button {
+  width: 25%;
 }
 
 /* ///////////////UPLOADERMODAL STYLING///////////////// */

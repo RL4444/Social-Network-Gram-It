@@ -252,8 +252,6 @@ app.post("/acceptfriendship/:id.json", function(req, res) {
 app.post("/friendshippending/:id.json", function(req, res) {
   db.friendshippending(req.params.id, req.session.userId)
     .then(friendInfo => {
-      // friendInfo.loggedInUserId = req.session.userId;
-      // console.log("friendInfo in friendship route", friendInfo);
       res.json(friendInfo);
     })
     .catch(error => console.log(error));
@@ -270,27 +268,62 @@ app.get("/friends-wannabes", function(req, res) {
 
 ///////////////////////////SPOTIFY AND YOUTUBE ROUTES/////////////////////
 
-app.post("/insertspotifyurl", function(req, res) {
-  console.log("it's getting to your insert route in spotify");
-  db.insertMediaSpotify(req.session.userId, req.body.spotifyurl).then(media => {
-    console.log("req.body in insertSpotifyUrl route", req.body.spotifyurl);
-    res.json({
-      success: true,
-      spotifyurl: req.body.spotifyurl
+app.post("/insertmedia", function(req, res) {
+  console.log("values about to be input in index.js", req.session.userId),
+    console.log("values about to be input index.js", req.body.youtubeurl),
+    db
+      .insertMedia(req.session.userId, req.body.youtubeurl)
+      .then(media => {
+        console.log(
+          "media data chunk after post insertMedia route action",
+          media.youtubeurl
+        );
+        res.json({
+          success: true,
+          youtubeurl: media.youtubeurl
+        });
+      })
+      .catch(() => res.sendStatus(500));
+});
+
+app.get("/user", function(req, res) {
+  db.getYourUserInfo(req.session.userId)
+    .then(data =>
+      res.json({
+        ...data,
+        profile_pic: data.profile_pic || "/images/default.png"
+      })
+    )
+    .catch(error => {
+      console.log(error);
     });
-  });
 });
 
 app.get("/allmedia", function(req, res) {
-  console.log("is it getting to my allmedia route");
-  db.getMediaById(req.session.userId).then(res => {
-    console.log("res", res);
+  // console.log("is it getting to my allmedia route", req.session.userId);
+  db.getMediaById(req.session.userId).then(data => {
+    console.log("data", data.youtubeurl);
     res.json({
       success: true,
-      spotifyurl: res.data.spotifyurl,
-      youtube: res.data.youtubeurl
+      youtubeurl: data.youtubeurl,
+      ...data
     });
   });
+});
+app.get("/usersmedia/:id.json", function(req, res) {
+  if (req.session.userId == req.params.id) {
+    res.json({
+      redirect: "/"
+    });
+  } else {
+    db.getMediaById(req.params.id).then(data => {
+      console.log(data);
+      res.json({
+        success: true,
+        youtubeurl: data.youtubeurl
+      });
+    });
+  }
 });
 
 /////////////////////////MIDDLE WARE AND PORTS//////////////////////////////////////////

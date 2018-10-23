@@ -24,8 +24,8 @@ CREATE TABLE friendships(
 
 CREATE TABLE media(
     id SERIAL PRIMARY KEY,
-    userid INT REFERENCES users(id),
+    userid INT NOT NULL UNIQUE,
     spotifyurl VARCHAR(300),
-    youtubeurl VARCHAR(300),
+    youtubeurl VARCHAR(600),
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
