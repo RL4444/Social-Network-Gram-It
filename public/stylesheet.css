@@ -88,11 +88,6 @@ h4 {
   padding: 0;
 }
 
-#placeholdernavbar {
-  width: 5vw;
-  height: 2vh;
-}
-
 #hideme {
   width: 0;
   height: 0;
@@ -380,20 +375,23 @@ input {
 
 #search-bar {
   margin-top: 3%;
-  width: 15%;
+  max-width: 15%;
   display: flex;
   flex-direction: row;
 }
 .search-icon {
-  width: 20%;
+  margin-top: 2.6%;
+  width: 5%;
   object-fit: cover;
 }
 .search-icon img {
   background-color: white;
-  height: 60%;
+  width: 100%;
 }
 
 .eachnavitem {
+  display: flex;
+  flex-direction: column;
   opacity: inherit;
   margin-top: 2%;
   width: 10%;
@@ -401,6 +399,16 @@ input {
   text-align: center;
   overflow: hidden;
 }
+.nav-item-text {
+  font-size: 0.5em;
+  color: white;
+}
+/* .nav-item-text :hover {
+  font-size: 0.5em;
+  color: black;
+
+  transition-duration: 0.2s;
+} */
 .eachnavitem img {
   overflow: hidden;
   margin-top: 7%;
@@ -408,27 +416,27 @@ input {
   max-width: 30%;
   max-height: 40%;
 }
-.eachnavitem img:hover {
-  height: 110%;
-  background-color: rgb(4, 50, 168, 0.5);
-  padding: 2px;
+
+.eachnavitem:hover {
+  font-size: 0.5em;
+  color: black;
+  /* text-decoration: underline; */
   transition-duration: 0.2s;
 }
+/* .eachnavitem img:hover {
+  max-width: 33%;
+  background-color: rgb(4, 50, 168, 0.35);
+  padding: 0.5px;
+  transition-duration: 0.2s;
+} */
 
 #online-link {
   margin-top: 3%;
   width: 30%;
 }
-#online-link a {
-  color: black;
-}
-#online-link a:hover {
-  color: rgb(4, 50, 168);
-  text-decoration: underline;
-}
 
 .eachnavitem:hover {
-  border-bottom: 2px solid rgb(4, 50, 168);
+  /* border-bottom: 2px solid rgb(4, 50, 168); */
   border-radius: 0;
 }
 
@@ -902,4 +910,40 @@ input {
 
 .side-bar-pic-style {
   max-height: 2%;
+}
+
+/* //////////////////////Media Query Stuff///////////////////////////////////////// */
+
+@media screen and (max-width: 1000px) {
+  /* //////////NAVBAR////////// */
+
+  .eachnavitem {
+    width: 18%;
+    margin-left: 2%;
+  }
+
+  #search-bar {
+    margin-right: 3%;
+  }
+  .search-icon {
+    margin-top: 2.6%;
+    width: 9%;
+    object-fit: cover;
+  }
+  #applogocontainer img {
+    width: 72%;
+  }
+
+  /* ////////HOME STYLING */
+
+  /* //////////VIDEO PLAYER/// */
+  #video-box {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    padding-top: 10px;
+    border-top: 10px solid rgb(132, 147, 179, 0.6);
+    margin-top: 4%;
+    padding-bottom: 30px;
+  }
 }

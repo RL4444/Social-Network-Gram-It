@@ -301,14 +301,18 @@ app.get("/user", function(req, res) {
 
 app.get("/allmedia", function(req, res) {
   // console.log("is it getting to my allmedia route", req.session.userId);
-  db.getMediaById(req.session.userId).then(data => {
-    console.log("data", data.youtubeurl);
-    res.json({
-      success: true,
-      youtubeurl: data.youtubeurl,
-      ...data
+  db.getMediaById(req.session.userId)
+    .then(data => {
+      console.log("data", data.youtubeurl);
+      res.json({
+        success: true,
+        youtubeurl: data.youtubeurl,
+        ...data
+      });
+    })
+    .catch(error => {
+      console.log("error with getting yt video", error);
     });
-  });
 });
 app.get("/usersmedia/:id.json", function(req, res) {
   if (req.session.userId == req.params.id) {
