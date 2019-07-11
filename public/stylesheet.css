@@ -11,7 +11,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(132, 147, 179, 0.6);
+  background-color: rgb(132, 147, 179, 0.6) !important;
   border-radius: 0;
   background: allowtransparency;
 }
@@ -60,17 +60,17 @@ button:hover {
 
 h1 {
   font-size: 2.8em;
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Ubuntu", sans-serif !important;
   text-align: center;
 }
 
 h2 {
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Ubuntu", sans-serif !important;
   text-align: center;
 }
 
 h3 {
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Ubuntu", sans-serif !important;
   text-align: center;
 }
 
@@ -932,6 +932,50 @@ input {
   }
   #applogocontainer img {
     width: 72%;
+  }
+  /* //////////SIDE BARS////////// */
+  #onlinesidebarcontainer {
+    top: 40%;
+  }
+
+  /* ////////HOME STYLING */
+
+  /* //////////VIDEO PLAYER/// */
+  #video-box {
+    width: 100%;
+    border: none;
+    border-radius: 0;
+    padding-top: 10px;
+    border-top: 10px solid rgb(132, 147, 179, 0.6);
+    margin-top: 4%;
+    padding-bottom: 30px;
+  }
+}
+@media screen and (max-width: 700px) {
+  /* //////////NAVBAR////////// */
+  #navbarstyling {
+    height: 2vh !important;
+  }
+
+  .eachnavitem {
+    width: 18%;
+    margin-left: 2%;
+  }
+
+  #search-bar {
+    margin-right: 3%;
+  }
+  .search-icon {
+    margin-top: 2.6%;
+    width: 9%;
+    object-fit: cover;
+  }
+  #applogocontainer img {
+    width: 72%;
+  }
+  /* //////////SIDE BARS////////// */
+  #onlinesidebarcontainer {
+    margin-top: 40%;
   }
 
   /* ////////HOME STYLING */

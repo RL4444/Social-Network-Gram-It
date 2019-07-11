@@ -58,7 +58,6 @@ module.exports.editUserPassword = function(
       return results.rows[0];
     })
     .catch(err => {
-      // console.log("this is workinggggggggggggggggg");
       return Promise.reject(err);
     });
 };
